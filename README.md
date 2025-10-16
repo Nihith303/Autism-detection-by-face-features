@@ -28,5 +28,5 @@ Dataset: https://www.kaggle.com/datasets/cihan063/autism-image-data
 
 1. **Clone the repository**
    ```bash
-   git clone [https://github.com/yourusername/Autism-Detection-by-image.git](https://github.com/yourusername/Autism-Detection-by-image.git)
+   git clone [https://github.com/Nihith303/Autism-detection-by-face-features.git](https://github.com/Nihith303/Autism-detection-by-face-features.git)
    cd Autism-Detection-by-image
