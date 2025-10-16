@@ -1,8 +1,8 @@
 # Autism Spectrum Disorder Detection using Deep Learning
 
-[![Python](https://img.shields.io/badge/Python-3.8%2B-blue)](https://www.python.org/)
-[![TensorFlow](https://img.shields.io/badge/TensorFlow-2.12.0-orange)](https://www.tensorflow.org/)
-[![Flask](https://img.shields.io/badge/Flask-2.3.3-green)](https://flask.palletsprojects.com/)
+[![Python](https://img.shields.io/badge/Python-3.10.X%2B-blue)](https://www.python.org/)
+[![TensorFlow](https://img.shields.io/badge/TensorFlow-2.16.1-orange)](https://www.tensorflow.org/)
+[![Flask](https://img.shields.io/badge/Flask-3.0.3-green)](https://flask.palletsprojects.com/)
 
 A deep learning-based web application for early detection of Autism Spectrum Disorder (ASD) through facial feature analysis. This tool uses Convolutional Neural Networks (CNNs) to analyze facial characteristics that may indicate ASD, providing a preliminary assessment that can support early intervention.
 
