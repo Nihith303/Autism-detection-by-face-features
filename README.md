@@ -1,6 +1,6 @@
 # Autism Spectrum Disorder Detection using Deep Learning
 
-[![Python](https://img.shields.io/badge/Python-3.10.X%2B-blue)](https://www.python.org/)
+[![Python](https://img.shields.io/badge/Python-3.10.X-blue)](https://www.python.org/)
 [![TensorFlow](https://img.shields.io/badge/TensorFlow-2.16.1-orange)](https://www.tensorflow.org/)
 [![Flask](https://img.shields.io/badge/Flask-3.0.3-green)](https://flask.palletsprojects.com/)
 
@@ -29,4 +29,5 @@ Dataset: https://www.kaggle.com/datasets/cihan063/autism-image-data
 1. **Clone the repository**
    ```bash
    git clone [https://github.com/Nihith303/Autism-detection-by-face-features.git](https://github.com/Nihith303/Autism-detection-by-face-features.git)
-   cd Autism-Detection-by-image
+   cd Autism-Detection-by-face-features
+   ```
