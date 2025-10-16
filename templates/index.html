@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Autism Prediction App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('background-image.jpg'); /* Replace with your background image path */
+            background-size: cover;
+            background-repeat: no-repeat;
+            margin: 0;
+            padding: 0;
+        }
+
+        .page {
+            width: 21cm;
+            min-height: 29.7cm;
+            padding: 2cm;
+            margin: 1cm auto;
+            border: 1px #951d9b solid;
+            border-radius: 5px;
+            box-shadow: 10px 10px 10px rgba(90, 11, 78, 0.1);
+        }
+
+        @page {
+            size: A4;
+            margin: 10px;
+        }
+
+        header {
+            font-size: 36px;
+            font-weight: bold;
+            color: #fff;
+            text-align: center;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), linear-gradient(to left, #553c9a, #b393d3);
+        }
+
+        h3 {
+            font-size: 24px;
+            color: #210f6b;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 2em;
+            background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white background */
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding-bottom: 20px;
+        }
+
+        img.uploaded-image {
+            max-width: 100%;
+            height: auto;
+            margin: 1em 0;
+        }
+
+        .result {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-top: 1em;
+        }
+
+        .upload-form {
+            text-align: center;
+        }
+
+        .upload-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 0.5em 1em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .upload-button:hover {
+            background-color: #0056b3;
+            color: white;
+        }
+
+        .upload-button:active {
+            background-color: #004699;
+            color: white;
+        }
+
+        color {
+            color: #edeef0;
+        }
+
+        p1 {
+            color: #333; /* Change the color as needed */
+        }
+
+        p3 {
+            color: #333; /* Change the color as needed */
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        .info-section {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .info-section h3 {
+            color: #2c3e50;
+            margin-top: 20px;
+            text-align: left;
+        }
+        
+        .info-section p, .info-section ul {
+            margin-bottom: 15px;
+            line-height: 1.6;
+            color: #34495e;
+        }
+        
+        .info-section ul {
+            padding-left: 20px;
+        }
+        
+        .disclaimer {
+            background-color: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 10px 15px;
+            margin-top: 20px;
+            font-size: 0.9em;
+        }
+        
+        .result-section {
+            margin-top: 20px;
+        }
+        
+        .image-container {
+            display: flex;
+            gap: 20px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .result-image {
+            max-width: 300px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .result-details {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .result-explanation {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+            border-left: 3px solid #4caf50;
+        }
+    </style>
+
+</head>
+
+<body class="page">
+    <header>
+        <h1>Autism Prediction App</h1>
+    </header>
+    <h3>
+        <center>
+            PROJECT TITLE:
+        </center>
+    </h3>
+    <p>
+        <center>
+            <b>Classification and Detection of Autism Spectrum Disorder Based on Deep Learning Algorithms.</b>
+        </center>
+    </p>
+    <div class="info-section">
+        <h3>Understanding Autism Spectrum Disorder (ASD)</h3>
+        <p>Autism Spectrum Disorder is a developmental condition that affects communication, social interaction, and behavior. 
+        Early detection is crucial as it allows for timely intervention and support, significantly improving long-term outcomes.</p>
+        
+        <h3>How Our Detection Works</h3>
+        <p>Our advanced deep learning model analyzes facial features and expressions that research has shown to be potential indicators of ASD, including:</p>
+        <ul>
+            <li>Facial symmetry and proportions</li>
+            <li>Facial expression characteristics</li>
+            <li>Distinct facial landmarks and their relationships</li>
+        </ul>
+
+        <h3>Why Early Detection Matters</h3>
+        <p>Early identification of ASD can lead to:</p>
+        <ul>
+            <li>Earlier access to intervention services</li>
+            <li>Improved social and communication skills</li>
+            <li>Better academic and life outcomes</li>
+            <li>Targeted support for families and caregivers</li>
+        </ul>
+
+        <div class="disclaimer">
+            <p><strong>Note:</strong> This tool is not a substitute for professional medical diagnosis. 
+            It is designed to assist in early screening and should be used in conjunction with professional evaluation.</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <h3>Try It Out</h3>
+        <p>Upload a clear, front-facing photo to analyze potential ASD indicators:</p>
+        <form class="upload-form" method="post" enctype="multipart/form-data">
+            <input type="file" name="image" accept="image/*" required>
+            <button class="upload-button" type="submit">Upload and Analyze</button>
+        </form>
+        
+        {% if img_path %}
+        <hr>
+        <div class="result-section">
+            <h3>Analysis Results</h3>
+            <div class="image-container">
+                <img src="{{ url_for('static',filename='uploads/'+filename) }}" alt="Uploaded Image" class="result-image">
+                <div class="result-details">
+                    <p class="result">Prediction: <strong>{{ result }}</strong></p>
+                    <p class="result-explanation">
+                        {% if 'Autistic' in result %}
+                        The analysis suggests potential indicators of Autism Spectrum Disorder. We recommend consulting with a healthcare professional for further evaluation.
+                        {% else %}
+                        The analysis did not detect strong indicators of Autism Spectrum Disorder. However, if you have concerns, please consult with a healthcare professional.
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</body>
+
+</html>
