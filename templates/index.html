@@ -162,6 +162,155 @@
             border-radius: 4px;
             border-left: 3px solid #4caf50;
         }
+        
+        .webcam-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        #video {
+            width: 100%;
+            max-width: 640px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: none;
+        }
+        
+        #canvas {
+            display: none;
+        }
+        
+        .button-group {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .capture-button, .start-button, .retake-button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 0.7em 1.5em;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .capture-button:hover, .start-button:hover, .retake-button:hover {
+            background-color: #218838;
+        }
+        
+        .capture-button:disabled, .start-button:disabled, .retake-button:disabled {
+            background-color: #6c757d;
+            cursor: not-allowed;
+        }
+        
+        .retake-button {
+            background-color: #ffc107;
+        }
+        
+        .retake-button:hover {
+            background-color: #e0a800;
+        }
+        
+        #capturedImage {
+            max-width: 100%;
+            max-height: 400px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin: 15px 0;
+        }
+        
+        .loading {
+            display: none;
+            margin: 15px 0;
+            font-size: 18px;
+            color: #007bff;
+        }
+        
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        
+        .tab {
+            padding: 12px 30px;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            color: #666;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .tab:hover {
+            color: #007bff;
+        }
+        
+        .tab.active {
+            color: #007bff;
+            border-bottom-color: #007bff;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .upload-area {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .file-input-wrapper {
+            position: relative;
+            display: inline-block;
+            margin: 20px 0;
+        }
+        
+        .file-input-wrapper input[type="file"] {
+            display: none;
+        }
+        
+        .file-input-label {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .file-input-label:hover {
+            background-color: #0056b3;
+        }
+        
+        .file-name {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        #uploadedImagePreview {
+            max-width: 100%;
+            max-height: 400px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin: 15px 0;
+            display: none;
+        }
     </style>
 
 </head>
@@ -210,32 +359,269 @@
 
     <div class="container">
         <h3>Try It Out</h3>
-        <p>Upload a clear, front-facing photo to analyze potential ASD indicators:</p>
-        <form class="upload-form" method="post" enctype="multipart/form-data">
-            <input type="file" name="image" accept="image/*" required>
-            <button class="upload-button" type="submit">Upload and Analyze</button>
-        </form>
+        <p>Choose your preferred method to analyze potential ASD indicators:</p>
         
-        {% if img_path %}
-        <hr>
-        <div class="result-section">
+        <div class="tabs">
+            <button class="tab active" data-tab="webcam">📷 Webcam Capture</button>
+            <button class="tab" data-tab="upload">📁 Upload Image</button>
+        </div>
+        
+        <!-- Webcam Tab -->
+        <div id="webcam" class="tab-content active">
+            <div class="webcam-container">
+                <video id="video" autoplay></video>
+                <canvas id="canvas"></canvas>
+                <img id="capturedImage" style="display: none;" />
+                
+                <div class="button-group">
+                    <button id="startButton" class="start-button">Start Webcam</button>
+                    <button id="captureButton" class="capture-button" style="display: none;" disabled>Capture Photo</button>
+                    <button id="retakeButton" class="retake-button" style="display: none;">Retake Photo</button>
+                    <button id="analyzeButton" class="upload-button" style="display: none;">Analyze Photo</button>
+                </div>
+                
+                <div class="loading" id="loadingWebcam">Analyzing image...</div>
+            </div>
+        </div>
+        
+        <!-- Upload Tab -->
+        <div id="upload" class="tab-content">
+            <div class="upload-area">
+                <p>Select a clear, front-facing photo from your device:</p>
+                
+                <div class="file-input-wrapper">
+                    <input type="file" id="fileInput" accept="image/*">
+                    <label for="fileInput" class="file-input-label">Choose Image</label>
+                </div>
+                
+                <div class="file-name" id="fileName"></div>
+                
+                <img id="uploadedImagePreview" />
+                
+                <div class="button-group">
+                    <button id="uploadAnalyzeButton" class="upload-button" style="display: none;">Analyze Photo</button>
+                </div>
+                
+                <div class="loading" id="loadingUpload">Analyzing image...</div>
+            </div>
+        </div>
+        
+        <div id="resultSection" class="result-section" style="display: none;">
+            <hr>
             <h3>Analysis Results</h3>
             <div class="image-container">
-                <img src="{{ url_for('static',filename='uploads/'+filename) }}" alt="Uploaded Image" class="result-image">
+                <img id="resultImage" class="result-image">
                 <div class="result-details">
-                    <p class="result">Prediction: <strong>{{ result }}</strong></p>
-                    <p class="result-explanation">
-                        {% if 'Autistic' in result %}
-                        The analysis suggests potential indicators of Autism Spectrum Disorder. We recommend consulting with a healthcare professional for further evaluation.
-                        {% else %}
-                        The analysis did not detect strong indicators of Autism Spectrum Disorder. However, if you have concerns, please consult with a healthcare professional.
-                        {% endif %}
-                    </p>
+                    <p class="result">Prediction: <strong id="predictionResult"></strong></p>
+                    <p class="result-explanation" id="resultExplanation"></p>
                 </div>
             </div>
         </div>
-        {% endif %}
     </div>
+    
+    <script>
+        // Tab switching
+        const tabs = document.querySelectorAll('.tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const targetTab = tab.getAttribute('data-tab');
+                
+                tabs.forEach(t => t.classList.remove('active'));
+                tabContents.forEach(tc => tc.classList.remove('active'));
+                
+                tab.classList.add('active');
+                document.getElementById(targetTab).classList.add('active');
+                
+                // Reset result section when switching tabs
+                resultSection.style.display = 'none';
+            });
+        });
+        
+        // Webcam elements
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+        const capturedImage = document.getElementById('capturedImage');
+        const startButton = document.getElementById('startButton');
+        const captureButton = document.getElementById('captureButton');
+        const retakeButton = document.getElementById('retakeButton');
+        const analyzeButton = document.getElementById('analyzeButton');
+        const loadingWebcam = document.getElementById('loadingWebcam');
+        
+        // Upload elements
+        const fileInput = document.getElementById('fileInput');
+        const fileName = document.getElementById('fileName');
+        const uploadedImagePreview = document.getElementById('uploadedImagePreview');
+        const uploadAnalyzeButton = document.getElementById('uploadAnalyzeButton');
+        const loadingUpload = document.getElementById('loadingUpload');
+        
+        // Result elements
+        const resultSection = document.getElementById('resultSection');
+        const resultImage = document.getElementById('resultImage');
+        const predictionResult = document.getElementById('predictionResult');
+        const resultExplanation = document.getElementById('resultExplanation');
+        
+        let stream = null;
+        let capturedImageData = null;
+        let uploadedFile = null;
+        
+        // Start webcam
+        startButton.addEventListener('click', async () => {
+            try {
+                stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                video.srcObject = stream;
+                video.style.display = 'block';
+                startButton.style.display = 'none';
+                captureButton.style.display = 'inline-block';
+                captureButton.disabled = false;
+                resultSection.style.display = 'none';
+            } catch (err) {
+                alert('Error accessing webcam: ' + err.message);
+            }
+        });
+        
+        // Capture photo
+        captureButton.addEventListener('click', () => {
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            const context = canvas.getContext('2d');
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            
+            capturedImageData = canvas.toDataURL('image/jpeg');
+            capturedImage.src = capturedImageData;
+            capturedImage.style.display = 'block';
+            
+            video.style.display = 'none';
+            captureButton.style.display = 'none';
+            retakeButton.style.display = 'inline-block';
+            analyzeButton.style.display = 'inline-block';
+            
+            // Stop the webcam stream
+            if (stream) {
+                stream.getTracks().forEach(track => track.stop());
+            }
+        });
+        
+        // Retake photo
+        retakeButton.addEventListener('click', async () => {
+            capturedImage.style.display = 'none';
+            retakeButton.style.display = 'none';
+            analyzeButton.style.display = 'none';
+            resultSection.style.display = 'none';
+            
+            try {
+                stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                video.srcObject = stream;
+                video.style.display = 'block';
+                captureButton.style.display = 'inline-block';
+                captureButton.disabled = false;
+            } catch (err) {
+                alert('Error accessing webcam: ' + err.message);
+            }
+        });
+        
+        // Analyze photo
+        analyzeButton.addEventListener('click', async () => {
+            if (!capturedImageData) {
+                alert('Please capture a photo first');
+                return;
+            }
+            
+            loadingWebcam.style.display = 'block';
+            analyzeButton.disabled = true;
+            
+            try {
+                const response = await fetch('/predict', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ image: capturedImageData })
+                });
+                
+                const data = await response.json();
+                
+                if (data.error) {
+                    alert('Error: ' + data.error);
+                } else {
+                    displayResults(data);
+                }
+            } catch (err) {
+                alert('Error analyzing image: ' + err.message);
+            } finally {
+                loadingWebcam.style.display = 'none';
+                analyzeButton.disabled = false;
+            }
+        });
+        
+        // File upload handling
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                uploadedFile = file;
+                fileName.textContent = file.name;
+                
+                // Preview the image
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    uploadedImagePreview.src = e.target.result;
+                    uploadedImagePreview.style.display = 'block';
+                    uploadAnalyzeButton.style.display = 'inline-block';
+                };
+                reader.readAsDataURL(file);
+                
+                resultSection.style.display = 'none';
+            }
+        });
+        
+        // Upload analyze button
+        uploadAnalyzeButton.addEventListener('click', async () => {
+            if (!uploadedFile) {
+                alert('Please select an image first');
+                return;
+            }
+            
+            loadingUpload.style.display = 'block';
+            uploadAnalyzeButton.disabled = true;
+            
+            try {
+                const formData = new FormData();
+                formData.append('image', uploadedFile);
+                
+                const response = await fetch('/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                if (data.error) {
+                    alert('Error: ' + data.error);
+                } else {
+                    displayResults(data);
+                }
+            } catch (err) {
+                alert('Error analyzing image: ' + err.message);
+            } finally {
+                loadingUpload.style.display = 'none';
+                uploadAnalyzeButton.disabled = false;
+            }
+        });
+        
+        // Function to display results
+        function displayResults(data) {
+            resultImage.src = '/static/' + data.img_path;
+            predictionResult.textContent = data.result;
+            
+            if (data.result.includes('Autistic') && !data.result.includes('Non')) {
+                resultExplanation.textContent = 'The analysis suggests potential indicators of Autism Spectrum Disorder. We recommend consulting with a healthcare professional for further evaluation.';
+            } else {
+                resultExplanation.textContent = 'The analysis did not detect strong indicators of Autism Spectrum Disorder. However, if you have concerns, please consult with a healthcare professional.';
+            }
+            
+            resultSection.style.display = 'block';
+        }
+    </script>
 </body>
-
 </html>
